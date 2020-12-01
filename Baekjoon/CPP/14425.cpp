@@ -10,7 +10,6 @@ using namespace std;
 #define SIZE 30
 
 
-
 struct Trie {
 
 	bool is_child, is_finish;

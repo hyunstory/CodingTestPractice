@@ -14,7 +14,6 @@
           //수정
           "${fileDirname}/${fileBasenameNoExtension}.out",
   
-          
           //추가
           // 1. execute .out file
           "&&", //to join building and running of the file
