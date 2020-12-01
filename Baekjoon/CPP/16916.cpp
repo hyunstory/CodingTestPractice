@@ -8,6 +8,7 @@ using namespace std;
 vector<int> make_nested(string P);
 vector<int> KMP(string S, string P);
 
+
 int main()
 {
 	ios_base::sync_with_stdio(false);
