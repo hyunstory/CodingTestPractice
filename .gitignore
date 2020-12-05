@@ -43,4 +43,9 @@
 !.vscode/extensions.json
 *.code-workspace
 
+### folder ###
+/*.out.dSYM/
+
+
+
 # End of https://www.toptal.com/developers/gitignore/api/vscode,c++
