@@ -44,7 +44,7 @@
 *.code-workspace
 
 ### folder ###
-/*.out.dSYM/
+*.out.dSYM/
 
 
 
