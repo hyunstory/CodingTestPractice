@@ -1,83 +1,66 @@
 #include <iostream>
-#include <string>
 #include <vector>
+#include <string>
 
 using namespace std;
 
-
-vector<int> make_nested(string P);
-vector<int> KMP(string S, string P);
-
-int main()
-{
-	ios_base::sync_with_stdio(false);
-	cin.tie(0);
-	string S, P;
-	cin >> S >> P;
-	vector<int>ans = KMP(S, P);
-	if (ans.empty())
-	{
-		cout << 0;
-	}
-	else
-	{
-		cout << 1;
-	}
-	return 0;
-}
-
-vector<int> make_nested(string P)
-{
-	int len_P = P.length();
+vector<int> getPI(string p){
 	int idx = 0;
-	vector<int> nested(len_P);
-	for (int i = 1; i < len_P; i++)
-	{
-		while (idx > 0)
-		{
-			if (P[i] == P[idx])
-			{
-				break;
-			}
+	int p_len = p.length();
+	vector<int>nested(p_len, 0);
+
+	for (int i = 1; i < p_len; i++){
+		while(idx > 0){
+			if (p[i] == p[idx]) break;
 			idx = nested[idx - 1];
 		}
-		if (P[i] == P[idx])
-		{
-			nested[i] = ++idx;
-		}
+
+		if (p[i] == p[idx]) nested[i] = ++idx;
 	}
+
 	return nested;
 }
-vector<int> KMP(string S, string P)
-{
+
+
+void solution(){
+
+	string s;
+	string p;
+
+	getline(cin, s, '\n');
+	getline(cin, p, '\n');
+
+	vector<int> nested = getPI(p);
 
 	int idx = 0;
-	int len_S = S.length();
-	int len_P = P.length();
-	vector<int>nested = make_nested(P);
-	vector<int>ans;
-	for (int i = 0; i < len_S; i++)
-	{
-		while (idx > 0)
-		{
-			if (S[i] == P[idx])
-			{
-				break;
-			}
+	vector<int> ans;
+	int s_len = s.length();
+	int p_len = p.length();
+
+	for (int i = 0; i < s_len; i++){
+		while(idx > 0){
+			if (s[i] == p[idx]) break;
 			idx = nested[idx - 1];
 		}
-		if(S[i]==P[idx])
-		{
-			if (idx == len_P - 1)
-			{
-				ans.push_back(i - (len_P - 1));
+
+		if (s[i] == p[idx]){
+			if (idx == p_len - 1){
+				ans.push_back(i - (p_len - 1));
 				idx = nested[idx];
 			}
-			else
-			{
-				idx++;
-			}
+			else idx++;
 		}
 	}
-	return ans;
+
+
+	if (!ans.empty()) cout << 1 << '\n';
+	else cout << 0 << '\n';
+}
+
+int main(){
+
+
+	solution();
+
+	return 0;
 }

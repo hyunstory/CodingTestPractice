@@ -1,93 +1,90 @@
 #include <iostream>
-#include <cstring>
-#include <string>
 #include <vector>
-#include <algorithm>
+#include <string>
 
 using namespace std;
 
-vector<int> make_nested(string P)
-{
-	int len_P = P.length();
+
+vector<int> pi(string p){
+	int p_len = p.length();
 	int idx = 0;
-	vector<int> nested(len_P);
-	for (int i = 1; i < len_P; i++)
-	{
-		while (idx > 0)
-		{
-			if (P[i] == P[idx])
-			{
-				break;
-			}
+
+	vector<int> nested(p_len, 0);
+
+	for (int i = 1; i < p_len; i++){
+
+		while(idx > 0){
+			if (p[i] == p[idx]) break;
 			idx = nested[idx - 1];
 		}
-		if (P[i] == P[idx])
-		{
-			nested[i] = ++idx;
-		}
+
+		if (p[i] == p[idx]) nested[i] = ++idx;
+
+
+
 	}
+
+
 	return nested;
 }
-vector<int> KMP(string S, string P)
-{
 
+vector<int> KMP(string s, string p){
+
+	int s_len = s.length();
+	int p_len = p.length();
 	int idx = 0;
-	int len_S = S.length();
-	int len_P = P.length();
-	vector<int>nested = make_nested(P);
-	vector<int>ans;
-	for (int i = 0; i < len_S; i++)
-	{
-		while (idx > 0)
-		{
-			if (S[i] == P[idx])
-			{
-				break;
-			}
+
+	vector<int> ans;
+
+	vector<int> nested = pi(p);
+
+	for (int i = 0; i < s_len; i++){
+		
+		while(idx > 0){
+			if (s[i] == p[idx]) break;
 			idx = nested[idx - 1];
 		}
-		if(S[i]==P[idx])
-		{
-			if (idx == len_P - 1)
-			{
-				ans.push_back(i - (len_P - 1));
+
+		if (s[i] == p[idx]){
+			if (idx == p_len - 1){
+				ans.push_back(i - (p_len - 1));
 				idx = nested[idx];
 			}
-			else
-			{
-				idx++;
-			}
+			else idx++;
 		}
-	}
-	return ans;
-}
 
+
+
+	}
+
+
+	return ans;
+
+}
 
 void solution(){
-    string a;
-    string cmp;
 
+	string s;
+	string p;
 
-    getline(cin, a, '\n');
-    getline(cin, cmp, '\n');
+	getline(cin, s, '\n');
+	getline(cin, p, '\n');
 
+	vector<int> ans = KMP(s, p);
 
-    vector<int>ans = KMP(a, cmp);
+	int ans_size = ans.size();
 
-    
-    cout << ans.size() << '\n';
-
-    for (int i = 0; i < ans.size(); i++){
-        cout << ans[i] + 1<< '\n';
-    }
-
+	cout << ans_size << '\n';
+	for (int i = 0; i < ans_size; i++){
+		cout << ans[i] + 1 << '\n';
+	}
 
 }
+
 int main(){
 
-    solution();
 
+	solution();
 
-    return 0;
-
+	return 0;
 }
