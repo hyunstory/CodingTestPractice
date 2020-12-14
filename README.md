@@ -4,7 +4,7 @@
 제가 공부했던 코딩테스트 개념과 문제 풀이를 공유합니다.
 
 
-#### solved.ac 레벨
+## solved.ac 레벨
 [Hyun's story 레벨]
 
 
