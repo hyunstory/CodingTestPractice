@@ -27,7 +27,9 @@ using namespace std;
 void solution(){
     priority_queue<int> pq; // default 오름차순 less
     priority_queue<int, vector<int>, less<int>> pq_less; // 오름차순으로 정렬되는 생성자 -max heap 가장 큰것이 top에 위치해있다.
-    priority_queue<int, vector<int>, greater<int>> pq_greater; // 내림차순으로 정렬되는 생성자 - min heap 가장 작은것이 top에 위치해있다.
+    priority_queue<int, vector<int>, greater<int>> pq_greater; // 내림차순으로 정렬되는 생성자 - min heap 가장 작은것이 top에 위치해있다. 
+    // ************ 위에서 greater<int>이다.. () 활성화 하지 않음!!**************
+
 
     pq.empty(); // 비어있는지
     pq.size(); // 사이즈 반환

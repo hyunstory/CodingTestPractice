@@ -130,6 +130,8 @@ rotate(v.begin(), v.begin() + 1, v.end()); // 1칸씩 rotate하겠다.
 //!<-- 정렬 -->
 //sort : 특정 범위의 원소들을 정렬한다.
 sort(v.begin(), v.end()); // 오름차순 정렬
+//내림차순 정렬
+sort(v.begin(), v.end(), greater<int>()); // **** 중요한점 !!! 정렬시에는 grater<int>() 활성화
 
 //is_sorted : 어떤 원소들이 정렬되어 있는지 확인한다.
 if (is_sorted(v.begin(), v.end())){
