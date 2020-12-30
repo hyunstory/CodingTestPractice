@@ -11,7 +11,7 @@ import Foundation
 
 
 // Array 배열 생성
-var arr1 = [Int](repeating: 0, count: 5)
+var arr1 = [Int](repeating: 0, count: 5) // 초기화 할 때 repeating과 count 개념 헷갈리지 않기..ㅠㅠ repeating에 개수 넣을 때 가끔 있는데, 시험 시간에는 정신없어서 체크 못할수도 있다. IDE사용못하기 때문
 var arr2: [Int] = []
 var arr3 = Array<Int>()
 var arr4 = [Int]()
