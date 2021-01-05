@@ -23,7 +23,7 @@ using namespace std;
 struct pred{
     bool operator() (const string &a, const string &b) const{
         if (a.size() == b.size()) return a < b;
-        else return a.size(), b.size();
+        else return a.size() < b.size();
 
     }
 };

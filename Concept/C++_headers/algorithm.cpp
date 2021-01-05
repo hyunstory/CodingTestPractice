@@ -165,13 +165,13 @@ if(binary_search(v.begin(), v.end(), 3)){
 vector<int> vec1;
 vector<int> vec2;
 vector<int> buf(vec1.size() + vec2.size());
-auto iter = set_union(vec1.begin(), vec1.end(), vec2.begin(), vec2.end(), buf.begin());
-buf.erase(iter, buf.end());
+auto iter = set_union(vec1.begin(), vec1.end(), vec2.begin(), vec2.end(), buf.begin()); // 두개의 컨테이너 시작 끝, 그리고 담을 컨테이너의 시작점 삽입.
+buf.erase(iter, buf.end()); // 합집합, 교집합 후, 끝점을 반환하기 때문에, 그 부분부터 buf.end()까지 삭제하면 공간을 불필요하게 쓸 필요가 없다.
 
 //set_intersection : 두 정렬된 원소들의 교집합을 구한다. (A\cap BA∩B)
 buf.resize(vec1.size() + vec2.size());
-auto iter = set_intersection(vec1.begin(), vec1.end(), vec2.begin(), vec2.end(), buf.begin());
-buf.erase(iter, buf.end());
+auto iter = set_intersection(vec1.begin(), vec1.end(), vec2.begin(), vec2.end(), buf.begin()); // 두개의 컨터이너의 시작 끝, 그리고 담을 컨테이너의 시작점 삽입
+buf.erase(iter, buf.end()); 
 
 //set_difference : 두 정렬된 원소들의 차집합을 구한다. (A-BA−B)
 buf.resize(vec1.size() + vec2.size());
