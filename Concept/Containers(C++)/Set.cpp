@@ -11,6 +11,11 @@ key라고 불리는 원소들의 집합으로 이루어진 컨테이너이다. �
 !! 원소가 insert 멤버 함수에 의해 삽이이 되면, 원소는 자동 정렬  default는 오름차순!!!
 
 set은 중위 순위로 출력이 가능하다
+
+
+s.count() 멤버함수 쓰지 말기..!! 항상 시간초과나온다.. s.find() != s.end()로 항상 사용하기...!
+s.count()는 매번 모든 원소들을 검사한다.
+find()는 lower_bound사용..???
 */
 
 #include <iostream>
@@ -65,6 +70,7 @@ void solution(){
     // 지우기
     s.erase(iter);
     s.erase(start, end);
+    //s.erase(값)
 
     // 찾기
     //s.find(v) -> iter반환, 없으면 end반환
