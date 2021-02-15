@@ -1,83 +1,55 @@
 #include <iostream>
 #include <algorithm>
-
-enum {
-
-	TEST_CASE_MAX = 1500001,
-	T_MAX = 51,
-	P_MAX = 1001
-
-
-
-};
-
-int result;
-
+#include <cstring>
 
 using namespace std;
-int N;
 
-struct counsel {
+const int MAX = 1500001;
 
-	int T;
-	int P;
+int t[MAX];
+int p[MAX];
+int dp[MAX];
+int n;
 
-};
+int go(int idx){
 
-int DP[TEST_CASE_MAX];
+	if (idx == n + 1) return 0;
 
-counsel Counsel[TEST_CASE_MAX];
+	int &ret = dp[idx];
+	if (ret != -1) return ret;
 
-void input() {
+	ret = 0;
 
-	cin >> N;
-
-	for (int i = 1; i <= N; i++) cin >> Counsel[i].T >> Counsel[i].P;
-
-}
-
-
-
-void solution() {
-
-	int max_temp = 0;
-
-	for (int i = 1; i <= N + 1; i++) {
-	
-		max_temp = max(max_temp, DP[i]);
-		if (i + Counsel[i].T > N + 1) continue;
-
-		DP[i + Counsel[i].T] = max(max_temp + Counsel[i].P, DP[i + Counsel[i].T]);
+	if (idx + t[idx] <= n + 1){
+		ret += max(go(idx + 1), p[idx] + go(idx + t[idx]));
+	}
+	else {
+		ret += go(idx + 1);
 	}
 
-	result = max_temp;
 
-
-	cout << result << '\n';
-
-
-
+	return ret;
 }
 
-void solve() {
+void solution(){
+	cin >> n;
 
+	for (int i = 1; i <= n; i++){
+		cin >> t[i] >> p[i];
 
-	input();
-	solution();
+	}
+	memset(dp, -1, sizeof(dp));
+
+	cout << go(1) << '\n';
+
 }
-
 int main() {
 
 	ios_base::sync_with_stdio(0);
 	cin.tie(0);
 	cout.tie(0);
 
-
-	solve();
-
-
-
-
+	solution();
 
 	return 0;
 }

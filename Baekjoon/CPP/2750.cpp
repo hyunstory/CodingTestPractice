@@ -158,7 +158,7 @@ void solution(){
     //quickSort(input, 0, size - 1);
     //HeapSort();
     //MergeSort(input, 0, size - 1);
-    BubbleSort(input, n);
+    //BubbleSort(input, n);
     //SelectionSort(input, n);
     //InsertionSort(input, n);
 

@@ -1,69 +1,41 @@
 #include <iostream>
 #include <algorithm>
-
-enum {
-
-	TEST_CASE_MAX = 16,
-	T_MAX = 6,
-	P_MAX = 1001
-
-
-
-};
-
-int result;
-
+#include <cstring>
 
 using namespace std;
-int N;
-
-struct counsel {
-
-	int T;
-	int P;
-
-};
-
-int DP[TEST_CASE_MAX];
-
-counsel Counsel[TEST_CASE_MAX];
-
-void input() {
-
-	cin >> N;
-
-	for (int i = 1; i <= N; i++) cin >> Counsel[i].T >> Counsel[i].P;
-
-}
 
 
+const int MAX = 16;
 
-void solution() {
+int n;
 
-	int max_temp = 0;
+int t[MAX];
+int p[MAX];
+int result;
+void go(int idx, int sum){
 
-	for (int i = 1; i <= N + 1; i++) {
-	
-		max_temp = max(max_temp, DP[i]);
-		if (i + Counsel[i].T > N + 1) continue;
+	if (idx > n + 1) return;
 
-		DP[i + Counsel[i].T] = max(max_temp + Counsel[i].P, DP[i + Counsel[i].T]);
+	if (idx == n + 1) {
+		result = max(result, sum);
+		return;
 	}
 
-	result = max_temp;
+	go(idx + t[idx], sum + p[idx]);
+	go(idx + 1, sum);
+	
 
-
-	cout << result << '\n';
-
-
-
+	
 }
+void solution(){
+	cin >> n;
 
-void solve() {
+	for (int i = 1; i <= n; i++){
+		cin >> t[i] >> p[i];
+	}
 
-
-	input();
-	solution();
+	go(1, 0);
+	cout << result << '\n';
 }
 
 int main() {
@@ -72,12 +44,7 @@ int main() {
 	cin.tie(0);
 	cout.tie(0);
 
-
-	solve();
-
-
-
-
+	solution();
 
 	return 0;
 }
