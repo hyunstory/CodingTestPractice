@@ -4,53 +4,52 @@
 
 using namespace std;
 
-
 int k, n;
-long long arr[10001];
 
-void solution() {
+const int MAX = 10001;
 
+vector<long long> v;
 
-	long long left = 1;
-	long long right = 1;
-
+void solution(){
 
 	cin >> k >> n;
 
+	long long left = 1;
+	long long right = 1; // 초기화
 
-	for (int i = 0; i < k; i++) {
-
-		cin >> arr[i];
-		right = max(right, arr[i]);
+	for (int i = 0; i < k; i++){
+		long long temp;
+		cin >> temp;
+		right = max(right, temp);
+		v.push_back(temp);
 	}
 
-	while (left <= right) {
+	
 
+	int v_size = v.size();
+
+	while( left <= right){ 
 		long long mid = (left + right) / 2;
 
-		long long sum = 0;
-
-		for (int i = 0; i < k; i++) {
-
-			long long temp = arr[i];
-
-			sum += (temp / mid);
+		// 시뮬레이션
+		long long cnt = 0;
+		for (int i = 0; i < v_size; i++){
+			cnt += (long long) v[i] / mid;
 		}
 
-
-		if (sum >= n) {
-			left = mid + 1;
-		}
-
-		else right = mid - 1;
+		if (cnt > n) left = mid + 1; 
+		else if (cnt < n) right = mid - 1;  
+		
+		
 	}
 
-
 	cout << right << '\n';
-	
 }
-int main() {
+int main(){
 
+	ios_base::sync_with_stdio(0);
+	cin.tie(0);
+	cout.tie(0);
 
 	solution();
 

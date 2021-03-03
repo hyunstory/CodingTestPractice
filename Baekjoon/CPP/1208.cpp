@@ -1,91 +1,103 @@
-// 부분 수열의 합!! 시간 아주 많이 단축할 수 있는 문제
-
-// dfsleft, dfsright를 반반 나누어 다 더한 후, 더한 값을 벡터에 삽입하여
-// 하나씩 값을 뺴보면서 계산한다.
-// lower bound, upper bound 값으로 차이 값을 구해주면 구하고 싶은 값을 구할 수 있다!!!
-
 #include <iostream>
-#include <vector>
 #include <algorithm>
+#include <vector>
 
 using namespace std;
 
-
 int n, s;
-int arr[41];
+
+const int MAX = 41;
+
+
+int arr[MAX];
+
 long long result;
 
-vector<int> a, b;
 
-void dfsLeft(int depth, int sum) {
+vector<int> a;
+vector<int> b;
 
-	sum += arr[depth];
+void left_temp(int idx, int sum){
 
-	if (depth >= n / 2) return;
+	if (idx >= n / 2) return;
 
 	if (sum == s) result++;
 
 	a.push_back(sum);
 
-	dfsLeft(depth + 1, sum - arr[depth]);
-	dfsLeft(depth + 1, sum);
-
+	left_temp(idx + 1, sum);
+	left_temp(idx + 1, sum + arr[idx]);
+	
 }
 
-void dfsRight(int depth, int sum) {
+void left(int idx, int sum){
 
-	sum += arr[depth];
+	sum += arr[idx];
 
-	if (depth >= n) return;
+	if (idx >= n /2) return;
+
+	if (sum == s) result++;
+
+	a.push_back(sum);
+
+	left(idx + 1, sum - arr[idx]);
+	left(idx + 1, sum);
+
+}
+void right(int idx, int sum){
+
+	sum += arr[idx];
+
+	if (idx >= n) return;
 
 	if (sum == s) result++;
 
 	b.push_back(sum);
 
-	dfsRight(depth + 1, sum - arr[depth]);
-	dfsRight(depth + 1, sum);
+	right(idx + 1, sum - arr[idx]);
+	right(idx + 1, sum);
 
-	
 
 }
-
-void solution() {
+void solution(){
 
 	cin >> n >> s;
 
-	for (int i = 0; i < n; i++) {
-
+	for (int i = 0; i < n; i++){
 		cin >> arr[i];
 	}
 
-	dfsLeft(0, 0);
-	dfsRight(n / 2, 0);
+	
+
+
+	left(0, 0);
+	right(n/2, 0);
 
 	sort(a.begin(), a.end());
 	sort(b.begin(), b.end());
 
 	int a_size = a.size();
 
-	for (int i = 0; i < a_size; i++) {
+	for (int i = 0; i < a_size; i++){
 
-		int remain = s - a[i];
-
-		int lower = lower_bound(b.begin(), b.end(), remain) - b.begin();
-		int upper = upper_bound(b.begin(), b.end(), remain) - b.begin();
+		int value = s - a[i];
+		
+		int upper = upper_bound(b.begin(), b.end(), value) - b.begin(); // 인덱스 위치를 알고 싶으면 begin을 빼주어야한다.
+		int lower = lower_bound(b.begin(), b.end(), value) - b.begin();
 
 		result += upper - lower;
-
-
+		
 
 	}
 
 	cout << result << '\n';
-	
+
 
 }
-int main() {
-
-
+int main(){
+	ios_base::sync_with_stdio(0);
+	cin.tie(0);
+	cout.tie(0);
 
 	solution();
 

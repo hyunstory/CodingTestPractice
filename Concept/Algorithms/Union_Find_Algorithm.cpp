@@ -37,11 +37,28 @@ using namespace std;
 int n, m;
 
 int tree[1000001];
+int parent[1000001];
 
 int find(int x) {
 	if (x == tree[x]) return x;
 	else return tree[x] = find(tree[x]);
 }
+
+// <!-- Merge 코드 !!! 중요합니다. 합칠 때 -->
+
+void merge(int x, int y){
+	x = find(x);
+	y = find(y);
+
+	if (x == y) return;
+
+	//작은 것이 parent가 될수있도록
+
+	if (x < y) parent[y] = x;
+	else parent[x] = y;
+}
+
+///////////////////
 
 void solution() {
 
