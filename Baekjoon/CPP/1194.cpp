@@ -4,90 +4,105 @@
 using namespace std;
 
 const int MAX = 51;
-const int range = 65;
 
-int map[MAX][MAX];
+char a[MAX][MAX];
 
-bool check[range][MAX][MAX];
-int start_x, start_y;
+bool check[MAX][MAX][33];
+
+int s_x;
+int s_y;
+int n, m;
 
 int dx[] = {-1, 1, 0, 0};
 int dy[] = {0, 0, -1, 1};
 
-int n, m;
+struct ppang{
+    int x;
+    int y;
+    int key;
+    int dist;
 
-int bfs(int start_x, int start_y){
+    ppang(int x, int y, int key, int dist): x(x), y(y), key(key), dist(dist){};
+};
 
-    queue<pair<pair<int,int>, pair<int,int>>> q;
-    q.push({{start_x,start_y},{0, 0}}); // x,y값, cnt와 암호코드 a~f
+int bfs(){
+    
+    queue<ppang> q;
 
-    check[0][start_x][start_y] = true;
+    q.push(ppang(s_x,s_y, 0, 0));
+    check[s_x][s_y][0] = true;
 
     while(!q.empty()){
 
-        int x = q.front().first.first;
-        int y= q.front().first.second;
-        int cnt = q.front().second.first;
-        int key = q.front().second.second;
-
+        int x = q.front().x;
+        int y = q.front().y;
+        int key = q.front().key;
+        int dist = q.front().dist;
         q.pop();
 
-        if (map[x][y] == '1') return cnt;
+        if (a[x][y] == '1') return dist;
+        
 
         for (int k = 0; k < 4; k++){
             int nx = x + dx[k];
             int ny = y + dy[k];
 
-            if (nx >= 0 && nx < n && ny >= 0 && ny < m && !check[key][nx][ny] && map[nx][ny] != '#'){
-                if (map[nx][ny] == '.' || map[nx][ny] == '1' || map[nx][ny] == '0'){
-                    check[key][nx][ny] = true;
-                    q.push({{nx,ny},{cnt + 1, key}});
+            if (nx < 0 || nx >= n || ny < 0 || ny >= m || check[nx][ny][key]) continue;
+
+            char point = a[nx][ny];
+
+            if (point == '.' || point == '1' || point == '0'){
+                check[nx][ny][key] = true;
+                q.push(ppang(nx, ny, key, dist + 1));
+
+            } else if(point >= 'a' && point <= 'f'){
+                int nKey = key | (1 << (point - 'a')); // ****주의!! 비트 연산 후에는 새로운 변수에 저장해야한다. 아래와 같이 같은 변수에 저장 시에 정답이 다르게 나온다??와이????도대체 왜??
+                //key = (key | (1 << (point - 'a')));
+
+                check[nx][ny][nKey] = true;
+                q.push(ppang(nx, ny, nKey, dist + 1));
+
+            } else if (point >= 'A' && point <= 'F'){
+                if (key & (1 << (point - 'A'))){
+                    check[nx][ny][key] = true;
+                    q.push(ppang(nx, ny, key, dist + 1));
                 }
-
-                else if (map[nx][ny] >= 'a' && map[nx][ny] <= 'f'){
-
-                    int nKey = key | (1 << (int(map[nx][ny] - 'a')));
-                    if (!check[nKey][nx][ny]){
-                        check[nKey][nx][ny] = true;
-                        check[key][nx][ny] = true;
-                        q.push({{nx, ny},{cnt +1, nKey}});
-                    }
-                }
-
-                else if (map[nx][ny] >= 'A' && map[nx][ny] <= 'F'){
-                    if (key & 1 << (int(map[nx][ny]) - 'A')){
-                        check[key][nx][ny] = true;
-                        q.push({{nx,ny},{cnt+1, key}});
-                    }
-                }
-
 
             }
+
         }
+
 
     }
 
     return -1;
+
+    
 }
 
 void solution(){
+
+
+
     cin >> n >> m;
 
-    for (int i = 0; i < n; i++)
+    for (int i = 0; i < n; i++){
         for (int j = 0; j < m; j++){
-            char temp;
-            cin >> temp;
+            cin >> a[i][j];
 
-            if (temp == '0'){
-                start_x = i;
-                start_y = j;
-            }
-            map[i][j] = temp;
+            char t = a[i][j];
+
+            if (t == '0'){
+                s_x = i;
+                s_y = j;
+                
+            } 
         }
+    }
 
-    int result = bfs(start_x, start_y);
+    
+    cout << bfs() << '\n';
 
-    cout << result << '\n';
 
 
 }
