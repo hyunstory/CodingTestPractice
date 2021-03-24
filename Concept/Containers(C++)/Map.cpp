@@ -77,6 +77,15 @@ void solution(){
     
     m.size();
 
+
+
+    // 모든 원소 접근
+    for (const auto &a : xm){
+        int x = a.first;
+        int cnt = a.second;
+
+        
+    }
  
 
 

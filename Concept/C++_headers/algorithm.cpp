@@ -69,6 +69,12 @@ min_element : 최소 원소를 찾는다. (이 때 해당 원소를 가리키는
 
 max_element : 최대 원소를 찾는다. (이 때 해당 원소를 가리키는 반복자를 리턴함)
 
+minmax_element: 최솟값, 최댓값 원소의 iterator를 반환한다.
+auto p = minmax_element(a.begin(), a.end());
+cout << *p.first << '\n'; 은 최솟값
+cout << *p.second << '\n'; 은 최댓값
+
+
 */
 
 #include <iostream>
@@ -95,7 +101,7 @@ if(find(v.begin(), v.end(), 1) != v.end()){
 int mycount = count(v.begin(), v.end(), 1);
 
 //!<-- 순열 관련 -->
-//next_permutation : 특정 원소들의 다음 순열을 얻는다. // 조합
+//next_permutation : 특정 원소들의 다음 순열을 얻는다. // 조합 (순열?조합->조합?)
 do{
 
     for (int i = 0; i < v.size();i++){
@@ -145,10 +151,10 @@ if (is_sorted(v.begin(), v.end())){
 
 
 //!<-- 이진 탐색 -->
-//lower_bound : 특정 값보다 작지 않는 첫 번째 원소를 찾습니다. (하한)
+//lower_bound : 특정 값과 같거나 작지 않는 첫 번째 원소를 찾습니다. (하한) 111222 맨 왼쪽 1
 auto lower = lower_bound(v.begin(), v.end(), 4); // iter 반환
 
-//upper_bound : 특정 값보다 큰 첫 번째 원소를 찾습니다. (상한)
+//upper_bound : 특정 값보다 큰 첫 번째 원소를 찾습니다. (상한)   111222 2 맨왼쪽
 auto upper = upper_bound(v.begin(), v.end(), 4);
 
 //* upper_bound - lower_bound = 같은 갯수 구하기
